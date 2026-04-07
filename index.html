@@ -708,15 +708,6 @@
                 ctx.shadowOffsetX = 0;
                 ctx.shadowOffsetY = 0;
 
-                // รวบรวมข้อความแจ้งเตือน (Alert) ข้อมูลขนาดและตำแหน่งที่แปะ
-                const alertMessage = `ระบบได้ทำการแปะแผนที่สำเร็จ!\n\n` +
-                                     `[ ค่าปัจจุบันสำหรับใช้ปรับแต่ง ]\n` +
-                                     `- ขนาดกว้าง (targetWidth): ${targetWidth} px\n` +
-                                     `- ขนาดสูง (targetHeight): ${Math.round(targetHeight)} px\n` +
-                                     `- พิกัดแกน X (startX): ${startX}\n` +
-                                     `- พิกัดแกน Y (startY): ${Math.round(startY)}`;
-                console.log(alertMessage);
-
                 // 5. บันทึกรูปอัตโนมัติ
                 const link = document.createElement("a");
                 link.href = finalCanvas.toDataURL("image/jpeg", 0.95); 
@@ -725,9 +716,6 @@
                 link.click();
 
                 if (bgImgSrc.startsWith('blob:') || bgImgSrc.startsWith('data:')) URL.revokeObjectURL(bgImgSrc);
-
-                // แจ้งเตือนผู้ใช้ถึงขนาดและตำแหน่ง (ทิ้งระยะเวลาสักครู่เพื่อไม่ให้บล็อคการดาวน์โหลด)
-                setTimeout(() => { alert(alertMessage); }, 500);
 
             } catch (err) {
                 console.error("Save Error:", err);
