@@ -496,8 +496,8 @@
                 let [cx, cy] = pathGen.centroid(f);
                 if (name === 'เชียงใหม่') { cx += 25; cy -= 15; } if (name === 'แม่ฮ่องสอน') { cx -= 5; cy += 15; }
                 const shadow = `1px 1px 2px ${c.out}, -1px -1px 2px ${c.out}, 1px -1px 2px ${c.out}, -1px 1px 2px ${c.out}`;
-                gLabel.append("text").attr("x", cx).attr("y", cy - 12).attr("text-anchor", "middle").attr("fill", c.txt).attr("font-size", "14").attr("font-weight", "700").style("font-family", "'Prompt', sans-serif").style("text-shadow", shadow).text(name);
-                gLabel.append("text").attr("x", cx).attr("y", cy + 15).attr("text-anchor", "middle").attr("fill", c.txt).attr("font-size", val > 0 ? "24" : "14").attr("font-weight", "800").style("font-family", "'Prompt', sans-serif").style("text-shadow", shadow).text(val > 0 ? val : "-");
+                gLabel.append("text").attr("x", cx).attr("y", cy - 12).attr("text-anchor", "middle").attr("fill", c.txt).attr("font-size", "14").attr("font-weight", "700").attr("font-family", "Prompt, sans-serif").style("font-family", "Prompt, sans-serif").style("text-shadow", shadow).text(name);
+                gLabel.append("text").attr("x", cx).attr("y", cy + 15).attr("text-anchor", "middle").attr("fill", c.txt).attr("font-size", val > 0 ? "24" : "14").attr("font-weight", "800").attr("font-family", "Prompt, sans-serif").style("font-family", "Prompt, sans-serif").style("text-shadow", shadow).text(val > 0 ? val : "-");
             });
         }
 
@@ -570,7 +570,7 @@
                     tempContainer.querySelectorAll('.flex.flex-wrap.justify-center.gap-3.mt-4').forEach(l => l.style.display = 'none');
                     
                     tempContainer.querySelectorAll('*').forEach(node => {
-                        node.style.setProperty('font-family', "'Prompt', sans-serif", 'important');
+                        node.style.setProperty('font-family', "Prompt, sans-serif", 'important');
                     });
 
                     setTimeout(() => {
@@ -582,7 +582,7 @@
                             width: 1000,
                             onclone: (clonedDoc) => {
                                 const style = clonedDoc.createElement('style');
-                                style.innerHTML = `* { font-family: 'Prompt', sans-serif !important; }`;
+                                style.innerHTML = `* { font-family: Prompt, sans-serif !important; }`;
                                 clonedDoc.head.appendChild(style);
                             }
                         }).then(canvas => {
@@ -781,7 +781,7 @@
                     document.body.appendChild(tempContainer);
 
                     tempContainer.querySelectorAll('*').forEach(node => {
-                        node.style.setProperty('font-family', "'Prompt', sans-serif", 'important');
+                        node.style.setProperty('font-family', "Prompt, sans-serif", 'important');
                     });
 
                     setTimeout(() => {
@@ -793,7 +793,7 @@
                             width: 1200,
                             onclone: (clonedDoc) => {
                                 const style = clonedDoc.createElement('style');
-                                style.innerHTML = `* { font-family: 'Prompt', sans-serif !important; }`;
+                                style.innerHTML = `* { font-family: Prompt, sans-serif !important; }`;
                                 clonedDoc.head.appendChild(style);
                             }
                         }).then(canvas => {
