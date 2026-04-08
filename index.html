@@ -484,6 +484,10 @@
             const svg = d3.select("#northMapSvg");
             svg.selectAll("*").remove();
             if (isMapLoading) return;
+
+            // 1. ฝังโค้ดโหลดฟอนต์ Prompt เข้าไปในตัวกราฟิกแผนที่ SVG โดยตรง (แก้ปัญหา iOS อ่านฟอนต์ไม่ออก 100%)
+            svg.append("style").text("@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700;800&display=swap'); text { font-family: 'Prompt', sans-serif !important; }");
+
             const projection = d3.geoMercator().fitSize([450, 420], { type: "FeatureCollection", features: geoFeatures });
             const pathGen = d3.geoPath().projection(projection);
             const gPoly = svg.append("g");
@@ -496,8 +500,8 @@
                 let [cx, cy] = pathGen.centroid(f);
                 if (name === 'เชียงใหม่') { cx += 25; cy -= 15; } if (name === 'แม่ฮ่องสอน') { cx -= 5; cy += 15; }
                 const shadow = `1px 1px 2px ${c.out}, -1px -1px 2px ${c.out}, 1px -1px 2px ${c.out}, -1px 1px 2px ${c.out}`;
-                gLabel.append("text").attr("x", cx).attr("y", cy - 12).attr("text-anchor", "middle").attr("fill", c.txt).attr("font-size", "14").attr("font-weight", "700").attr("font-family", "Prompt").style("font-family", "'Prompt', sans-serif").style("text-shadow", shadow).text(name);
-                gLabel.append("text").attr("x", cx).attr("y", cy + 15).attr("text-anchor", "middle").attr("fill", c.txt).attr("font-size", val > 0 ? "24" : "14").attr("font-weight", "800").attr("font-family", "Prompt").style("font-family", "'Prompt', sans-serif").style("text-shadow", shadow).text(val > 0 ? val : "-");
+                gLabel.append("text").attr("x", cx).attr("y", cy - 12).attr("text-anchor", "middle").attr("fill", c.txt).attr("font-size", "14").attr("font-weight", "700").attr("font-family", "'Prompt', sans-serif").style("text-shadow", shadow).text(name);
+                gLabel.append("text").attr("x", cx).attr("y", cy + 15).attr("text-anchor", "middle").attr("fill", c.txt).attr("font-size", val > 0 ? "24" : "14").attr("font-weight", "800").attr("font-family", "'Prompt', sans-serif").style("text-shadow", shadow).text(val > 0 ? val : "-");
             });
         }
 
@@ -582,14 +586,15 @@
 
                 setTimeout(() => {
                     html2canvas(tempContainer, { 
-                        scale: 2.5, // ใช้สเกล 2.5 (คมชัดสูงสุดเหมือนการกดบันทึกภาพแบบปกติ)
+                        scale: 3, // 2. ปรับสเกลความคมชัดจาก 2.5 เป็น 3 (คมชัดสูงสุดสำหรับแคปรูปแผนที่)
                         backgroundColor: null, 
                         useCORS: true, 
                         logging: false,
                         width: 1000,
                         onclone: (clonedDoc) => {
                             const style = clonedDoc.createElement('style');
-                            style.innerHTML = `* { font-family: 'Prompt', sans-serif !important; }`;
+                            // เพิ่ม @import ในหน้าต่างแคปรูปอีกชั้น
+                            style.innerHTML = `@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700;800&display=swap'); * { font-family: 'Prompt', sans-serif !important; }`;
                             clonedDoc.head.appendChild(style);
                         }
                     }).then(canvas => {
@@ -714,9 +719,9 @@
                 ctx.shadowOffsetX = 0;
                 ctx.shadowOffsetY = 0;
 
-                // 5. บันทึกรูปอัตโนมัติ
+                // 3. บันทึกรูปอัตโนมัติ (ปรับภาพไม่ให้เบลอ)
                 const link = document.createElement("a");
-                link.href = finalCanvas.toDataURL("image/jpeg", 0.95); 
+                link.href = finalCanvas.toDataURL("image/jpeg", 1.0); // ปรับคุณภาพเป็น 1.0 (100% ไม่บีบอัด ให้ภาพคมชัดกริบเท่ากรอบต้นฉบับ)
                 let fileDate = (shortDateForTemplate + shortTimeForTemplate).replace(/[\s\.]/g, '_').replace(/:/g, '');
                 link.download = `PM25_North_Template_${fileDate}.jpg`;
                 link.click();
@@ -792,14 +797,14 @@
 
                     setTimeout(() => {
                         html2canvas(tempContainer, { 
-                            scale: 2.5, 
+                            scale: 3, // 4. ปรับสเกลตารางอันดับปกติ เป็น 3 ด้วย เพื่อความคมชัดสูงสุด
                             backgroundColor: null, 
                             useCORS: true, 
                             logging: false,
                             width: 1200,
                             onclone: (clonedDoc) => {
                                 const style = clonedDoc.createElement('style');
-                                style.innerHTML = `* { font-family: 'Prompt', sans-serif !important; }`;
+                                style.innerHTML = `@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700;800&display=swap'); * { font-family: 'Prompt', sans-serif !important; }`;
                                 clonedDoc.head.appendChild(style);
                             }
                         }).then(canvas => {
